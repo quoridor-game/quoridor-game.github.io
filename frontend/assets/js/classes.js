@@ -62,11 +62,12 @@ function Crossover() {
 
 function createObjects(elements, array, ourClasses) {
 
-    elements.forEach(function (element, index) {
+    $.each(elements, function (index, element) {
         var object = new ourClasses();
         object.domElement = element;
-        array.append(object);
+        array.push(object);
     });
+    console.log(array);
 
 }
 
@@ -78,18 +79,24 @@ function initApplication() {
 
     var objectsCells = [];
     var objectsCrossovers = [];
-    var objectsWalls = [];
+
+    var objectsVerticalWalls = [];
+    var objectsHorizontalWalls = [];
 
     createObjects(cells, objectsCells, Cell);
     createObjects(crossovers, objectsCrossovers, Crossover);
-    createObjects(allWalls, objectsWalls, Wall);
+
+    createObjects(allWalls.filter(":not(.horisont-wall)"), objectsVerticalWalls, Wall);
+    createObjects(allWalls.filter(".horisont-wall"), objectsHorizontalWalls, Wall);
 
 
     objectsCrossovers.forEach(function (element, index) {
-        element.top = objectsWalls[index];
-        element.left = objectsWalls[index + 8];
-        element.right = objectsWalls[index + 9];
-        element.bottom = objectsWalls[index + 17];
+        var delta = parseInt((index - 1) / 7);
+        element.top = objectsVerticalWalls[index];
+        element.bottom = objectsVerticalWalls[index + 8];
+
+        element.left = objectsHorizontalWalls[index + delta];
+        element.right = objectsHorizontalWalls[index + 1 + delta];
     })
 
 
