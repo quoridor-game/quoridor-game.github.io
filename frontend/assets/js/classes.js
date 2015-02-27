@@ -20,57 +20,77 @@ function Cell() {
  *
  * @constructor Wall
  *
- * top, ..., left - ссылки на соседние стены/клетки
  */
 function Wall() {
+    this.domElement = null;
+    this.empty = true;
+
+    this.firstCell = null;
+    this.secondCell = null;
+
+    this.getNeighbor = function (me) {
+
+        if (this.firstCell == me) {
+            return this.secondCell;
+        }
+
+        if (this.secondCell == me) {
+            return this.firstCell;
+        }
+
+        return null;
+    }
+}
+
+/***
+ *
+ * @constructor Crossover
+ *
+ * top, ..., left - ссылки на соседние стены/клетки
+ */
+function Crossover() {
 
     this.domElement = null;
+    this.empty = true;
 
     this.top = null;
     this.right = null;
     this.bottom = null;
     this.left = null;
 
-    this.isChoosen = false;
-    this.isFill = false;
+}
 
-    this.isVertical = function () {
-        return this.left === null && this.right === null;
-    };
+function createObjects(elements, array, ourClasses) {
 
-    this.isHorizontal = function () {
-        return !this.isVertical();
-    };
-
-    this.choose = function () {
-
-        if (this.isFill) {
-            return;
-        }
-
-        if (this.isChoosen) {
-            this.isChoosen = false;
-            return;
-        }
-
-        [this.top, this.right, this.bottom, this.left].forEach(function (element) {
-            if (this.checkNeighbor(element)) {
-                this.isChoosen = element.isChoosen = false;
-                this.isFill = element.isFill = true;
-            }
-            return;
-        });
-    };
-
-    this.checkNeighbor = function (neighbor) {
-        if (neighbor instanceof Wall && neighbor.isChoosen) {
-            return true;
-        }
-        return false;
-    }
+    elements.forEach(function (element, index) {
+        var object = new ourClasses();
+        object.domElement = element;
+        array.append(object);
+    });
 
 }
 
 function initApplication() {
+
+    var cells = $(".cell");
+    var crossovers = $(".crossover");
+    var allWalls = $(".wall");
+
+    var objectsCells = [];
+    var objectsCrossovers = [];
+    var objectsWalls = [];
+
+    createObjects(cells, objectsCells, Cell);
+    createObjects(crossovers, objectsCrossovers, Crossover);
+    createObjects(allWalls, objectsWalls, Wall);
+
+
+    objectsCrossovers.forEach(function (element, index) {
+        element.top = objectsWalls[index];
+        element.left = objectsWalls[index + 8];
+        element.right = objectsWalls[index + 9];
+        element.bottom = objectsWalls[index + 17];
+    })
+
 
 }
