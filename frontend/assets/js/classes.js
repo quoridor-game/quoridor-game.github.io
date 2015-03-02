@@ -1,5 +1,23 @@
 /***
  *
+ * @constructor Player
+ *
+ */
+
+function Player() {
+    this.name = "";
+    this.class = "";
+    this.position = null;
+}
+
+
+var firstPlayer = new Player();
+var secondPlayer = new Player();
+var currentPlayer = firstPlayer;
+
+
+/***
+ *
  * @constructor Cell
  *
  * top, ..., left - ссылки на соседние стены.
@@ -7,6 +25,8 @@
 function Cell() {
 
     this.contain = "";
+
+    this.domElement = null;
 
     this.top = null;
     this.right = null;
@@ -16,21 +36,37 @@ function Cell() {
 
 }
 
-//Cell.prototype.click = function () {
-//
-//    if (this.top) {
-//        this.top.domElement.css("background-color", "red");
-//    }
-//    if (this.right) {
-//        this.right.domElement.css("background-color", "red");
-//    }
-//    if (this.bottom) {
-//        this.bottom.domElement.css("background-color", "red");
-//    }
-//    if (this.left) {
-//        this.left.domElement.css("background-color", "red");
-//    }
-//};
+function changePlayer() {
+    if (currentPlayer == firstPlayer) {
+        currentPlayer = secondPlayer;
+    } else {
+        currentPlayer = firstPlayer;
+    }
+
+}
+
+Cell.prototype.click = function () {
+
+    var self = this;
+
+    [
+        currentPlayer.position.top,
+        currentPlayer.position.right,
+        currentPlayer.position.bottom,
+        currentPlayer.position.left].forEach(function (element, index) {
+
+            if (element !== undefined && !element.domElement.hasClass("wall-fill")) {
+
+                if (element.getNeighbor(currentPlayer.position) == self) {
+                    currentPlayer.position.domElement.removeClass(currentPlayer.class);
+                    currentPlayer.position = self;
+                    currentPlayer.position.domElement.addClass(currentPlayer.class);
+                    changePlayer();
+                }
+            }
+        });
+
+};
 
 /***
  *
@@ -82,6 +118,10 @@ function Crossover() {
     this.bottom = null;
     this.left = null;
 
+    this.hover = function () {
+        
+    }
+
 
 }
 
@@ -112,6 +152,8 @@ Crossover.prototype.click = function () {
         this.right.domElement.toggleClass("wall-fill");
     }
 
+    changePlayer();
+
 
 };
 
@@ -122,6 +164,9 @@ function createObjects(elements, array, ourClasses) {
         object.domElement = $(element);
         object.domElement.click(function () {
             object.click.call(object);
+        });
+        object.domElement.hover(function () {
+            object.hover.call(object);
         });
         array.push(object);
 
@@ -163,6 +208,18 @@ function initApplication() {
     });
 
     objectsCells.forEach(function (element, index) {
+
+        if (element.domElement.hasClass("-first-player")) {
+            firstPlayer.name = "Moond";
+            firstPlayer.class = "-first-player";
+            firstPlayer.position = element;
+        }
+
+        if (element.domElement.hasClass("-second-player")) {
+            secondPlayer.name = "Naggi";
+            secondPlayer.class = "-second-player";
+            secondPlayer.position = element;
+        }
 
         var delta = parseInt(index / 9);
 
