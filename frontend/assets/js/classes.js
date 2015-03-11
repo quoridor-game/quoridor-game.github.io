@@ -55,7 +55,7 @@ Cell.prototype.click = function () {
         currentPlayer.position.bottom,
         currentPlayer.position.left].forEach(function (element, index) {
 
-            if (element !== undefined && !element.domElement.hasClass("wall-fill")) {
+            if (element !== null && element !== undefined && !element.domElement.hasClass("wall-fill")) {
 
                 if (element.getNeighbor(currentPlayer.position) == self) {
                     currentPlayer.position.domElement.removeClass(currentPlayer.class);
