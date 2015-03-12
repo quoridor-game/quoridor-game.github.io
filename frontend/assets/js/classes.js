@@ -100,8 +100,6 @@ Cell.prototype.click = function () {
                                 changePlayer();
                             }
                         } else {
-                            console.log(neighborCell)
-                            console.log(neighborCell.domElement)
                             currentPlayer.position = neighborCell;
                             self.domElement.trigger("click");
                         }
@@ -213,7 +211,6 @@ function createObjects(elements, array, ourClasses) {
         });
         array.push(object);
 
-        console.log(array);
 
     });
 }
