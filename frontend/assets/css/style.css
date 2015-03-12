@@ -1,22 +1,35 @@
+html {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+}
+body {
+    width: 100%;
+    height: 100%;
+}
 .main-wrapper {
-    width: 700px;
-    margin: auto;
+    height: 100%;
+    margin: 0 auto;
 }
 
 .game-field {
-    width: 700px;
-    height: 770px;
-    background-color: #9f6849;
+    width: 80%;
+    height: 79%;
+    background-color: #7d231e;
     text-align: center;
+    padding: 1.5% 1% 0;
+    margin: auto;
 }
 
 .cell {
-    background-color: #4d5059;
+    background-color: #333232;
     display: inline-block;
-    width: 60px;
-    height: 60px;
+    width: 8.4%;
+    height: 100%;
     border-radius: 6%;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
 }
+
 
 .-first-player {
     background-color: #fff;
@@ -28,29 +41,35 @@
 
 .wall {
     display: inline-block;
-    width: 20px;
-    height: 60px;
-    transition: background-color .3s;
+    width: 2.8%;
+    height: 100%;
+    transition: all .3s;
 }
 
 .wall-fill {
-    background-color: #ffd890;
+    background-color: #f0be78;
+    box-shadow: 5px 5px 4px 1px rgba(0,0,0,0.5);
+    transform: translate3d(0,0,0px);
+    z-index: 2;
 }
 
 .horisont-wall {
-    height: 20px;
-    width: 60px;
+    height: 100%;
+    width: 8.4%;
 }
+
 .crossover {
     display: inline-block;
-    width: 20px;
-    height: 20px;
-    transition: background-color .3s;
+    width: 2.8%;
+    height: 100%;
+    transition: all .3s;
     cursor: pointer;
+    z-index: 20;
+    transform: translate3d(0,0,2px);
 }
 .line{
-    height: 60px;
+    height: 8.4%;
 }
 .cross-line{
-    height: 20px;
+    height: 2.8%;
 }
