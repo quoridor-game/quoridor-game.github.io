@@ -45,27 +45,70 @@ function changePlayer() {
 
 }
 
+
 Cell.prototype.click = function () {
 
+    var moved = false
+
     var self = this;
+    if (self.domElement.is(".-first-player, .-second-player")) {
+        return;
+    }
 
     [
-        currentPlayer.position.top,
-        currentPlayer.position.right,
-        currentPlayer.position.bottom,
-        currentPlayer.position.left].forEach(function (element, index) {
+        { cell: currentPlayer.position.top, direction: "top"},
+        { cell: currentPlayer.position.right, direction: "right"},
+        { cell: currentPlayer.position.bottom, direction: "bottom"},
+        { cell: currentPlayer.position.left, direction: "left"}
+        ].forEach(function (el, index) {
 
+            var element = el.cell;
             if (element !== null && element !== undefined && !element.domElement.hasClass("wall-fill")) {
+                var neighborCell = element.getNeighbor(currentPlayer.position);
 
-                if (element.getNeighbor(currentPlayer.position) == self) {
-                    currentPlayer.position.domElement.removeClass(currentPlayer.class);
+                if (neighborCell == self) {
+                    $(".cell").removeClass(currentPlayer.class);
                     currentPlayer.position = self;
                     currentPlayer.position.domElement.addClass(currentPlayer.class);
                     changePlayer();
+                    moved = true;
                 }
             }
         });
 
+    if (!moved)
+    {
+        [
+            { cell: currentPlayer.position.top, direction: "top"},
+            { cell: currentPlayer.position.right, direction: "right"},
+            { cell: currentPlayer.position.bottom, direction: "bottom"},
+            { cell: currentPlayer.position.left, direction: "left"}
+            ].forEach(function (el, index) {
+                var element = el.cell;
+                if (element !== null && element !== undefined && !element.domElement.hasClass("wall-fill")) {
+                    var neighborCell = element.getNeighbor(currentPlayer.position);
+
+                    if (neighborCell.domElement.is(".-first-player, .-second-player")) {
+                        var nextNeighborWall = neighborCell[el.direction];
+                        if (nextNeighborWall !== null && nextNeighborWall !== undefined && !nextNeighborWall.domElement.hasClass("wall-fill")) {
+                            var nextNeigborCell = nextNeighborWall.getNeighbor(neighborCell);
+                            
+                            if (nextNeigborCell == self) {
+                                $(".cell").removeClass(currentPlayer.class);
+                                currentPlayer.position = self;
+                                currentPlayer.position.domElement.addClass(currentPlayer.class);
+                                changePlayer();
+                            }
+                        } else {
+                            console.log(neighborCell)
+                            console.log(neighborCell.domElement)
+                            currentPlayer.position = neighborCell;
+                            self.domElement.trigger("click");
+                        }
+                    }
+                }
+            });
+    }
 };
 
 /***
