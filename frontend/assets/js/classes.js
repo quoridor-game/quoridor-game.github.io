@@ -37,6 +37,12 @@ function Cell() {
 }
 
 function changePlayer() {
+    if(currentPlayer == firstPlayer && currentPlayer.position.top == undefined) {
+        alert("First Player Win!!!")
+    }
+    if(currentPlayer == secondPlayer && currentPlayer.position.bottom == undefined) {
+        alert("Second Player Win!!!")
+    }
     if (currentPlayer == firstPlayer) {
         currentPlayer = secondPlayer;
     } else {
