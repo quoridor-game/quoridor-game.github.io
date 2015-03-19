@@ -54,10 +54,10 @@ body {
     transform: translate3d(0,0,0px);
     z-index: 2;
 }
-/*.wall-fill.wall-hover {
+.wall-fill.wall-hover {
     background-color: red;
     opacity: 1;
-}*/
+}
 .wall-hover{
     background-color: #ffd8a8;
     opacity: 0.5;

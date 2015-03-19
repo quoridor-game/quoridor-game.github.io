@@ -159,11 +159,33 @@ function Crossover() {
     this.bottom = null;
     this.left = null;
 
-    this.hover = function () {
-        
+}
+
+Crossover.prototype.hoverIn = function () {
+    
+    if (this.domElement.hasClass("wall-fill")) {
+        return;
     }
+    
+    this.domElement.addClass("wall-hover");
 
+    if (window.orientation) {
+        this.top.domElement.addClass("wall-hover");
+        this.bottom.domElement.addClass("wall-hover");
+    }     
+    else {
+        this.left.domElement.addClass("wall-hover");
+        this.right.domElement.addClass("wall-hover");
+    }
+}
 
+Crossover.prototype.hoverOut = function () {
+    this.domElement.removeClass("wall-hover");
+    
+    this.top.domElement.removeClass("wall-hover");
+    this.bottom.domElement.removeClass("wall-hover");
+    this.left.domElement.removeClass("wall-hover");
+    this.right.domElement.removeClass("wall-hover");
 }
 
 Crossover.prototype.click = function () {
@@ -198,17 +220,41 @@ Crossover.prototype.click = function () {
 
 };
 
+function changeOrientation(){
+    window.orientation = ! window.orientation;
+}
+
+Crossover.prototype.oncontextmenu = function () {
+    this.hoverOut();
+    this.hoverIn();
+}
+
 function createObjects(elements, array, ourClasses) {
 
     $.each(elements, function (index, element) {
         var object = new ourClasses();
         object.domElement = $(element);
-        object.domElement.click(function () {
-            object.click.call(object);
+        object.domElement.mousedown(function (event) {
+            if (event.button == 0) {
+                object.click.call(object);
+            } else {
+                changeOrientation();
+                object.oncontextmenu.call(object);
+            }
+
         });
-        object.domElement.hover(function () {
-            object.hover.call(object);
-        });
+        if (Crossover == ourClasses) {
+            object.domElement.hover(function () {
+                object.hoverIn.call(object);
+            }, function () {
+                object.hoverOut.call(object);
+            });
+            // console.log(object.domElement.oncontextmenu);
+            // object.domElement.oncontextmenu(function () {
+            //     object.oncontextmenu.call(object);
+
+            // });
+        }
         array.push(object);
 
 
