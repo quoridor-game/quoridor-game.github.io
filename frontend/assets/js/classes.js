@@ -260,29 +260,30 @@ function createObjects(elements, array, ourClasses) {
     $.each(elements, function (index, element) {
         var object = new ourClasses();
         object.domElement = $(element);
+
+
+        object.domElement.click(function () {
+            object.click.call(object);
+        });
+
         object.domElement.mousedown(function (event) {
-            if (event.button == 0) {
-                object.click.call(object);
-            } else {
+            if (event.button == 2) {
                 changeOrientation();
                 object.oncontextmenu.call(object);
             }
-
         });
+
         if (Crossover == ourClasses) {
+
             object.domElement.hover(function () {
                 object.hoverIn.call(object);
             }, function () {
                 object.hoverOut.call(object);
             });
-            // console.log(object.domElement.oncontextmenu);
-            // object.domElement.oncontextmenu(function () {
-            //     object.oncontextmenu.call(object);
 
-            // });
         }
-        array.push(object);
 
+        array.push(object);
 
     });
 }
