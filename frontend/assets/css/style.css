@@ -9,6 +9,7 @@ body {
     -webkit-user-select: none;
     width: 100%;
     height: 100%;
+    background: url(../img/background.jpg) no-repeat center;
 }
 .main-wrapper {
     height: 100%;
@@ -38,7 +39,7 @@ body {
 }
 
 .-second-player {
-    background-color: #000;
+    background-color: #D2B48C;
 }
 
 .wall {
@@ -82,4 +83,8 @@ body {
 }
 .cross-line{
     height: 2.8%;
+}
+
+#test-field{
+    display: none;
 }

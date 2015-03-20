@@ -15,6 +15,13 @@ var firstPlayer = new Player();
 var secondPlayer = new Player();
 var currentPlayer = firstPlayer;
 
+function changePlayer() {
+    if (currentPlayer == firstPlayer) {
+        currentPlayer = secondPlayer;
+    } else {
+        currentPlayer = firstPlayer;
+    }
+}
 
 /***
  *
@@ -51,10 +58,13 @@ function changePlayer() {
 
 }
 
+Cell.prototype.hover = function(){
+
+};
 
 Cell.prototype.click = function () {
 
-    var moved = false
+    var moved = false;
 
     var self = this;
     if (self.domElement.is(".-first-player, .-second-player")) {
@@ -70,10 +80,13 @@ Cell.prototype.click = function () {
 
             var element = el.cell;
             if (element !== null && element !== undefined && !element.domElement.hasClass("wall-fill")) {
+
+
                 var neighborCell = element.getNeighbor(currentPlayer.position);
 
                 if (neighborCell == self) {
                     $(".cell").removeClass(currentPlayer.class);
+                    console.log(currentPlayer.class)
                     currentPlayer.position = self;
                     currentPlayer.position.domElement.addClass(currentPlayer.class);
                     changePlayer();
@@ -98,7 +111,7 @@ Cell.prototype.click = function () {
                         var nextNeighborWall = neighborCell[el.direction];
                         if (nextNeighborWall !== null && nextNeighborWall !== undefined && !nextNeighborWall.domElement.hasClass("wall-fill")) {
                             var nextNeigborCell = nextNeighborWall.getNeighbor(neighborCell);
-                            
+
                             if (nextNeigborCell == self) {
                                 $(".cell").removeClass(currentPlayer.class);
                                 currentPlayer.position = self;
@@ -139,6 +152,9 @@ function Wall() {
         return null;
     }
 }
+Wall.prototype.hover = function () {
+
+};
 
 //Wall.prototype.click = function () {
 //
@@ -168,17 +184,17 @@ function Crossover() {
 }
 
 Crossover.prototype.hoverIn = function () {
-    
+
     if (this.domElement.hasClass("wall-fill")) {
         return;
     }
-    
+
     this.domElement.addClass("wall-hover");
 
     if (window.orientation) {
         this.top.domElement.addClass("wall-hover");
         this.bottom.domElement.addClass("wall-hover");
-    }     
+    }
     else {
         this.left.domElement.addClass("wall-hover");
         this.right.domElement.addClass("wall-hover");
@@ -187,12 +203,16 @@ Crossover.prototype.hoverIn = function () {
 
 Crossover.prototype.hoverOut = function () {
     this.domElement.removeClass("wall-hover");
-    
+
     this.top.domElement.removeClass("wall-hover");
     this.bottom.domElement.removeClass("wall-hover");
     this.left.domElement.removeClass("wall-hover");
     this.right.domElement.removeClass("wall-hover");
 }
+
+Crossover.prototype.hover = function () {
+
+};
 
 Crossover.prototype.click = function () {
 
