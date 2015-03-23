@@ -9,10 +9,12 @@ function Player() {
     this.class = "";
     this.position = null;
     this.wall_count = 10;
+    this.wall_array = null;
 
     this.wall_decrement = function () {
         this.wall_count--;
         console.log(this.wall_count);
+        this.wall_array.eq(this.wall_count).removeClass("wall-simul_fill");
     }
 }
 
@@ -222,9 +224,12 @@ Crossover.prototype.hover = function () {
 
 Crossover.prototype.click = function () {
 
-
+    if (currentPlayer.wall_count == 0) {
+        alert("No more walls")
+        return;
+    }
     if (this.domElement.hasClass("wall-fill")) {
-        return
+        return;
     }
 
     if (window.orientation) {
@@ -332,12 +337,14 @@ function initApplication() {
             firstPlayer.name = "Moond";
             firstPlayer.class = "-first-player";
             firstPlayer.position = element;
+            firstPlayer.wall_array = $(".wall-storage__bottom .wall-simul");
         }
 
         if (element.domElement.hasClass("-second-player")) {
             secondPlayer.name = "Naggi";
             secondPlayer.class = "-second-player";
             secondPlayer.position = element;
+            secondPlayer.wall_array = $(".wall-storage__top .wall-simul");
         }
 
         var delta = parseInt(index / 9);
