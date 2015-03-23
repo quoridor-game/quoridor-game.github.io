@@ -43,17 +43,59 @@
     <script type="text/javascript">
         $(document).ready(function() {
             var height = $(".main-wrapper").height();
+            var height_2 = $(".game-field").height();
+            
             $(".main-wrapper").css("width",height);
+            $(".game-field").css("width",height_2);
+            $(".wall-storage3").css("width",height_2);
+
+            var width_1 = $(".crossover").width();
+            $(".wall-simul__js").css("width",width_1);            
+
+            $(window).resize(function() {
+                height = $(".main-wrapper").height();
+                height_2 = $(".game-field").height();
+                
+                $(".main-wrapper").css("width",height);
+                $(".game-field").css("width",height_2);
+                $(".wall-storage3").css("width",height_2);
+
+                width_1 = $(".crossover").width();
+                $(".wall-simul__js").css("width",width_1);            
+
+            });
         });
-         $(window).resize(function() {
-            var height = $(".main-wrapper").height();
-            $(".main-wrapper").css("width",height);
-        });
+        
     </script>
 
 </head>
 <body>
 <div class="main-wrapper">
+    <div class="wall-storage">
+        <div class="wall-storage2">
+            <div class="wall-simul wall-simul__js"></div><!--
+             --><div class="wall-storage3">
+                    <div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div>
+                </div><!--
+            --><div class="wall-simul wall-simul__js"></div>
+        </div>
+    </div>
     <div class="game-field">
         <div class="line">
             <div class="cell"></div><!--
@@ -377,6 +419,31 @@
             --><div class="cell"></div><!--
             --><div class="wall"></div><!--
             --><div class="cell"></div>
+        </div>
+    </div>
+    <div class="wall-storage wall-storage__bottom">
+        <div class="wall-storage2">
+            <div class="wall-simul wall-simul__js"></div><!--
+             --><div class="wall-storage3">
+                    <div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div><!--
+                    --><div class="wall-simul"></div><!--
+                    --><div class="cell-simul"></div>
+                </div><!--
+            --><div class="wall-simul wall-simul__js"></div>
         </div>
     </div>
 </div>

@@ -371,5 +371,5 @@ function initApplication() {
 
     });
 
-
+    $(".wall-simul").addClass("wall-simul_fill");
 }
