@@ -8,6 +8,12 @@ function Player() {
     this.name = "";
     this.class = "";
     this.position = null;
+    this.wall_count = 10;
+
+    this.wall_decrement = function () {
+        this.wall_count--;
+        console.log(this.wall_count);
+    }
 }
 
 
@@ -240,7 +246,7 @@ Crossover.prototype.click = function () {
         this.left.domElement.toggleClass("wall-fill");
         this.right.domElement.toggleClass("wall-fill");
     }
-
+    currentPlayer.wall_decrement();
     changePlayer();
 
 
