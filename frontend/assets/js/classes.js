@@ -13,7 +13,6 @@ function Player() {
 
     this.wall_decrement = function () {
         this.wall_count--;
-        console.log(this.wall_count);
         this.wall_array.eq(this.wall_count).removeClass("wall-simul_fill");
     }
 }
@@ -52,10 +51,10 @@ function Cell() {
 }
 
 function changePlayer() {
-    if(currentPlayer == firstPlayer && currentPlayer.position.top == undefined) {
+    if (currentPlayer == firstPlayer && currentPlayer.position.top == undefined) {
         alert("First Player Win!!!")
     }
-    if(currentPlayer == secondPlayer && currentPlayer.position.bottom == undefined) {
+    if (currentPlayer == secondPlayer && currentPlayer.position.bottom == undefined) {
         alert("Second Player Win!!!")
     }
     if (currentPlayer == firstPlayer) {
@@ -66,7 +65,7 @@ function changePlayer() {
 
 }
 
-Cell.prototype.hover = function(){
+Cell.prototype.hover = function () {
 
 };
 
@@ -80,11 +79,11 @@ Cell.prototype.click = function () {
     }
 
     [
-        { cell: currentPlayer.position.top, direction: "top"},
-        { cell: currentPlayer.position.right, direction: "right"},
-        { cell: currentPlayer.position.bottom, direction: "bottom"},
-        { cell: currentPlayer.position.left, direction: "left"}
-        ].forEach(function (el, index) {
+        {cell: currentPlayer.position.top, direction: "top"},
+        {cell: currentPlayer.position.right, direction: "right"},
+        {cell: currentPlayer.position.bottom, direction: "bottom"},
+        {cell: currentPlayer.position.left, direction: "left"}
+    ].forEach(function (el, index) {
 
             var element = el.cell;
             if (element !== null && element !== undefined && !element.domElement.hasClass("wall-fill")) {
@@ -94,7 +93,6 @@ Cell.prototype.click = function () {
 
                 if (neighborCell == self) {
                     $(".cell").removeClass(currentPlayer.class);
-                    console.log(currentPlayer.class)
                     currentPlayer.position = self;
                     currentPlayer.position.domElement.addClass(currentPlayer.class);
                     changePlayer();
@@ -103,14 +101,13 @@ Cell.prototype.click = function () {
             }
         });
 
-    if (!moved)
-    {
+    if (!moved) {
         [
-            { cell: currentPlayer.position.top, direction: "top"},
-            { cell: currentPlayer.position.right, direction: "right"},
-            { cell: currentPlayer.position.bottom, direction: "bottom"},
-            { cell: currentPlayer.position.left, direction: "left"}
-            ].forEach(function (el, index) {
+            {cell: currentPlayer.position.top, direction: "top"},
+            {cell: currentPlayer.position.right, direction: "right"},
+            {cell: currentPlayer.position.bottom, direction: "bottom"},
+            {cell: currentPlayer.position.left, direction: "left"}
+        ].forEach(function (el, index) {
                 var element = el.cell;
                 if (element !== null && element !== undefined && !element.domElement.hasClass("wall-fill")) {
                     var neighborCell = element.getNeighbor(currentPlayer.position);
@@ -257,8 +254,8 @@ Crossover.prototype.click = function () {
 
 };
 
-function changeOrientation(){
-    window.orientation = ! window.orientation;
+function changeOrientation() {
+    window.orientation = !window.orientation;
 }
 
 Crossover.prototype.oncontextmenu = function () {

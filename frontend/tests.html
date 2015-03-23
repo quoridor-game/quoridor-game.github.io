@@ -15,22 +15,19 @@
 
             initApplication();
 
-            var $cells = $(".cell");
-            window.player = true;
+            var $mainWrapper = $(".main-wrapper");
+            var height = $mainWrapper.height();
+            $mainWrapper.css("width", height);
+
+            $(window).resize(function () {
+                var height = $mainWrapper.height();
+                $mainWrapper.css("width", height);
+            });
+
+            $(window).trigger("resize")
 
         });
     </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var height = $(".main-wrapper").height();
-            $(".main-wrapper").css("width",height);
-        });
-         $(window).resize(function() {
-            var height = $(".main-wrapper").height();
-            $(".main-wrapper").css("width",height);
-        });
-    </script>
-
 </head>
 <body>
 <div class="main-wrapper">

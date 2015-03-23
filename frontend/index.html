@@ -6,7 +6,6 @@
     <link href="assets/css/reset.css" rel="stylesheet" type="text/css">
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
     <script src="assets/js/jquery-2.1.3.js" type="text/javascript"></script>
-    <script src="assets/js/lodash.js" type="text/javascript"></script>
     <script src="assets/js/classes.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
@@ -16,58 +15,35 @@
 
             initApplication();
 
-//            var $walls = $(".wall");
-            var $cells = $(".cell");
-            window.player = true;
-//
-//            $walls.click(function () {
-//                $(this).toggleClass("wall-fill");
-//            });
-//
-//            $cells.mousedown(function (e) {
-//
-//                if (e.button == 0) {
-//                    $cells.removeClass("-first-player");
-//                    $(this).addClass("-first-player");
-//                    return false;
-//                }
-//                if (e.button == 2) {
-//                    $cells.removeClass("-second-player");
-//                    $(this).addClass("-second-player");
-//                    return false;
-//                }
-//                return true;
-//            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var height = $(".main-wrapper").height();
-            var height_2 = $(".game-field").height();
-            
-            $(".main-wrapper").css("width",height);
-            $(".game-field").css("width",height_2);
-            $(".wall-storage3").css("width",height_2);
+            var $mainWrapper = $(".main-wrapper");
+            var $gameField = $(".game-field");
+            var $wallStorage = $(".wall-storage3");
+            var $wallSimul = $(".wall-simul__js");
+            var $crossover = $(".crossover");
+            var mainWrapperHeight = $mainWrapper.height();
+            var gameFieldHeight = $gameField.height();
+            var crossoverWidth = $crossover.width();
 
-            var width_1 = $(".crossover").width();
-            $(".wall-simul__js").css("width",width_1);            
+            $mainWrapper.css("width", mainWrapperHeight);
+            $gameField.css("width", gameFieldHeight);
+            $wallStorage.css("width", gameFieldHeight);
+            $wallSimul.css("width", crossoverWidth);
 
-            $(window).resize(function() {
-                height = $(".main-wrapper").height();
-                height_2 = $(".game-field").height();
-                
-                $(".main-wrapper").css("width",height);
-                $(".game-field").css("width",height_2);
-                $(".wall-storage3").css("width",height_2);
+            $(window).resize(function () {
+                mainWrapperHeight = $mainWrapper.height();
+                gameFieldHeight = $gameField.height();
+                crossoverWidth = $crossover.width();
 
-                width_1 = $(".crossover").width();
-                $(".wall-simul__js").css("width",width_1);            
-
+                $mainWrapper.css("width", mainWrapperHeight);
+                $gameField.css("width", gameFieldHeight);
+                $wallStorage.css("width", gameFieldHeight);
+                $wallSimul.css("width", crossoverWidth);
             });
-        });
-        
-    </script>
 
+            $(window).trigger("resize");
+
+        });
+    </script>
 </head>
 <body>
 <div class="main-wrapper">
