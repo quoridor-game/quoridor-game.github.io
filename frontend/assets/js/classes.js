@@ -48,6 +48,7 @@ function Cell() {
     this.left = null;
 
 
+
 }
 
 function changePlayer() {
@@ -93,9 +94,11 @@ Cell.prototype.click = function () {
 
                 if (neighborCell == self) {
                     $(".cell").removeClass(currentPlayer.class);
+                    $(".cell").removeClass("-current-player");
                     currentPlayer.position = self;
                     currentPlayer.position.domElement.addClass(currentPlayer.class);
                     changePlayer();
+                    currentPlayer.position.domElement.addClass("-current-player");
                     moved = true;
                 }
             }

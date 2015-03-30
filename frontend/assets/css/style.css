@@ -94,17 +94,24 @@ body {
     height: 100%;
     border-radius: 6%;
     box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
+    transition: background-color .3s;
 }
 
 .-first-player {
     
-/*    background: url(../img/player_1.png);
-    background-size: cover;*/
-    background-color: #fff;
+    background: url(../img/player1.png) 0% 45%;
+    background-size: cover;
+    background-color: #333232;
 }
 
 .-second-player {
-    background-color: #D2B48C;
+    /*background-color: #D2B48C;*/
+    background: url(../img/player2.png);
+    background-size: cover;
+    background-color: #333232;
+}
+.-current-player {
+    background-color: #58160E;
 }
 
 .wall {
