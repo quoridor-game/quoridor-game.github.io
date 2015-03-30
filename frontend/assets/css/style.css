@@ -121,6 +121,19 @@ body {
     transition: all .3s;
 }
 
+.wall div:first-child {
+    display: inline-block;
+    height: 50%;
+    width: 100%;
+    float: left;
+}
+.wall div:last-child {
+    display: inline-block;
+    height: 50%;
+    width: 100%;
+    float: right;
+}
+
 .wall-fill {
     background-color: #f0be78;
     box-shadow: 5px 5px 4px 1px rgba(0,0,0,0.5);
@@ -139,6 +152,19 @@ body {
 .horisont-wall {
     height: 100%;
     width: 8.4%;
+}
+
+.horisont-wall div:first-child {
+    display: inline-block;
+    height: 100%;
+    width: 50%;
+    float: left;
+}
+.horisont-wall div:last-child {
+    display: inline-block;
+    height: 100%;
+    width: 50%;
+    float: right;
 }
 
 .crossover {

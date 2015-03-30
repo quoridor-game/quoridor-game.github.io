@@ -48,7 +48,6 @@ function Cell() {
     this.left = null;
 
 
-
 }
 
 function changePlayer() {
@@ -65,10 +64,6 @@ function changePlayer() {
     }
 
 }
-
-Cell.prototype.hover = function () {
-
-};
 
 Cell.prototype.click = function () {
 
@@ -147,6 +142,9 @@ function Wall() {
     this.firstCell = null;
     this.secondCell = null;
 
+    this.firstCrossover = null;
+    this.secondCrossover = null;
+
     this.getNeighbor = function (me) {
 
         if (this.firstCell == me) {
@@ -160,19 +158,42 @@ function Wall() {
         return null;
     }
 }
-Wall.prototype.hover = function () {
+
+Wall.prototype.hoverIn = function (where) {
+    window.orientation = ! this.domElement.hasClass("horisont-wall");
+    if (where == 'first' && this.firstCrossover) {
+        this.firstCrossover.domElement.trigger('mouseenter');
+    } else {
+        if (this.secondCrossover) {
+            this.secondCrossover.domElement.trigger('mouseenter');
+        } else {
+            this.firstCrossover.domElement.trigger('mouseenter');
+        }
+    }
 
 };
+Wall.prototype.hoverOut = function (where) {
+    window.orientation = ! this.domElement.hasClass("horisont-wall");
+    if (where == 'first' && this.firstCrossover) {
+        this.firstCrossover.domElement.trigger('mouseleave');
+    } else {
+        if (this.secondCrossover) {
+            this.secondCrossover.domElement.trigger('mouseleave');
+        } else {
+            this.firstCrossover.domElement.trigger('mouseleave');
+        }
+    }
+};
 
-//Wall.prototype.click = function () {
-//
-//    if (this.firstCell) {
-//        this.firstCell.domElement.css("background-color", "green");
-//    }
-//    if (this.secondCell) {
-//        this.secondCell.domElement.css("background-color", "green");
-//    }
-//};
+Wall.prototype.firstClick = function () {
+    window.orientation = ! this.domElement.hasClass("horisont-wall");
+    this.firstCrossover.domElement.trigger("click");
+};
+
+Wall.prototype.secondClick = function () {
+    window.orientation = ! this.domElement.hasClass("horisont-wall");
+    this.secondCrossover.domElement.trigger("click");
+};
 
 /***
  *
@@ -264,7 +285,7 @@ function changeOrientation() {
 Crossover.prototype.oncontextmenu = function () {
     this.hoverOut();
     this.hoverIn();
-}
+};
 
 function createObjects(elements, array, ourClasses) {
 
@@ -273,9 +294,35 @@ function createObjects(elements, array, ourClasses) {
         object.domElement = $(element);
 
 
-        object.domElement.click(function () {
-            object.click.call(object);
-        });
+        if (Wall == ourClasses) {
+            object.domElement.find("div:first-child").click(function () {
+                object.firstClick.call(object);
+            });
+
+            object.domElement.find("div:first-child").hover(function () {
+                object.hoverIn.call(object, 'first');
+            }, function () {
+                object.hoverOut.call(object, 'first');
+            });
+
+            object.domElement.find("div:last-child").click(function () {
+                object.secondClick.call(object);
+            });
+
+            object.domElement.find("div:last-child").hover(function () {
+                object.hoverIn.call(object, 'last');
+            }, function () {
+                object.hoverOut.call(object, 'last');
+            });
+
+
+        }
+        else {
+
+            object.domElement.click(function () {
+                object.click.call(object);
+            });
+        }
 
         object.domElement.mousedown(function (event) {
             if (event.button == 2) {
@@ -309,6 +356,7 @@ function initApplication() {
 
     var objectsCells = [];
     var objectsCrossovers = [];
+    window.objectsCrossovers = objectsCrossovers;
 
     var objectsVerticalWalls = [];
     var objectsHorizontalWalls = [];
@@ -329,6 +377,25 @@ function initApplication() {
         element.left = objectsHorizontalWalls[index + delta];
         element.right = objectsHorizontalWalls[index + 1 + delta];
 
+    });
+
+
+    objectsCrossovers.forEach(function (element, index) {
+
+        [element.top, element.right, element.bottom, element.left].forEach(function (wall, index) {
+            if (wall) {
+
+                if (index == 0 || index == 3) {
+                    wall.secondCrossover = element;
+                }
+
+                if (index == 1 || index == 2) {
+                    wall.firstCrossover = element;
+
+                }
+
+            }
+        });
     });
 
     objectsCells.forEach(function (element, index) {
