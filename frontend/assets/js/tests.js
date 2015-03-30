@@ -30,44 +30,17 @@ QUnit.test("test global changePlayer", function (assert) {
 
 });
 
-QUnit.test("test simple Cell.click", function (assert) {
+QUnit.test("click test", function (assert) {
 
 
-    var testField = $('#test-field');
+    var start = firstPlayer.position;
+    
+    firstPlayer.position.top.getNeighbor(firstPlayer.position).domElement.trigger("click");
 
-    window.cell = new Cell();
+    assert.ok(start !== firstPlayer.position, "Passed!");
+    assert.ok(!start.domElement.hasClass("-first-player") , "Passed!");
 
-    currentPlayer.position = cell;
-    currentPlayer.name = "Moond";
-    currentPlayer.class = "-first-player";
-
-    cell.domElement = $('<div class="-first-player cell"></div>');
-
-    testField.append(cell.domElement);
-
-    ['top', 'right', 'bottom', 'left'].forEach(function (element) {
-
-        cell[element] = new Wall();
-
-        cell[element].domElement = $("<div></div>");
-
-        testField.append(cell[element].domElement);
-
-        cell[element].firstCell = cell;
-
-        var newCell = new Cell();
-
-        newCell.domElement = $("<div class='cell'></div>");
-
-        testField.append(newCell.domElement);
-
-        cell[element].secondCell = newCell;
-
-    });
-
-    cell.top.getNeighbor(cell).click();
-
-    assert.ok(!cell.domElement.hasClass("-first-player"), "Passed!");
-    assert.ok(cell.top.getNeighbor(cell).domElement.hasClass("-first-player"), "Passed!");
+    assert.ok(start.top.getNeighbor(start) === firstPlayer.position, "Passed!");
+    assert.ok(start.top.getNeighbor(start).domElement.hasClass("-first-player"), "Passed!");
 
 });
