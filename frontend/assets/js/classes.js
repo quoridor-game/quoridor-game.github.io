@@ -21,6 +21,7 @@ function Player() {
 var firstPlayer = new Player();
 var secondPlayer = new Player();
 var currentPlayer = firstPlayer;
+var objectsCells = [];
 
 function changePlayer() {
     if (currentPlayer == firstPlayer) {
@@ -47,6 +48,89 @@ function Cell() {
     this.bottom = null;
     this.left = null;
 
+
+}
+
+function isPathExist() {
+
+    var bothPath = [firstPlayer, secondPlayer].every(function(player, plIndex){
+
+        var stack = [];
+        var notCarrentPlayer;
+        var arrayForPlayer;
+        var direction;
+
+        // $(".cell").css("background-color","#333232");
+
+        pathExist = false;
+
+        objectsCells.forEach(function (el, index) {
+            el.passed = false;
+            // console.log("bla")
+        });
+
+        if (player == firstPlayer) {
+            notCarrentPlayer = secondPlayer;
+            direction = 3;
+        } else {
+            notCarrentPlayer = firstPlayer;
+            direction = 0;
+        }
+
+        var notCarrentCell = notCarrentPlayer.position;
+
+        stack.push(notCarrentCell);
+        notCarrentCell.passed = true;
+
+        while (stack.length) {
+            // notCarrentCell.domElement.css("background-color","red");
+            var localPath = [
+                {wall: notCarrentCell.top},
+                {wall: notCarrentCell.right},
+                {wall: notCarrentCell.left},
+                {wall: notCarrentCell.bottom}
+            ].some(function (el, index) {
+
+                var element = el.wall;
+
+                if (index == direction && element == undefined) {
+                    pathExist = true;
+                    return true;
+                }
+
+                if (element !== null && element !== undefined && !element.domElement.hasClass("wall-fill")) {
+
+                    var neighborCell = element.getNeighbor(notCarrentCell);
+                    if (!neighborCell.passed) {
+                        // notCarrentCell.domElement.css("background-color","#fff");
+                        notCarrentCell = neighborCell;
+
+                        stack.push(notCarrentCell);
+                        notCarrentCell.passed = true;
+                        // alert("qwe")
+
+                        return true;
+                    }
+                }
+            });
+            if (!localPath) {
+                // notCarrentCell.domElement.css("background-color","#333232")
+
+                notCarrentCell = stack.pop();
+                if (stack.length != 0) {
+                    notCarrentCell = stack.pop();
+                    stack.push(notCarrentCell);
+                }
+
+            }
+            if (pathExist) {
+                // alert("wef");
+                return true;
+            }
+        }
+
+    });
+    return bothPath;
 
 }
 
@@ -272,6 +356,22 @@ Crossover.prototype.click = function () {
         this.left.domElement.toggleClass("wall-fill");
         this.right.domElement.toggleClass("wall-fill");
     }
+
+    if (!isPathExist()) {
+        alert("Wrong move!");
+
+        this.domElement.toggleClass("wall-fill");
+
+        if (window.orientation) {
+            this.top.domElement.toggleClass("wall-fill");
+            this.bottom.domElement.toggleClass("wall-fill");
+        } else {
+            this.left.domElement.toggleClass("wall-fill");
+            this.right.domElement.toggleClass("wall-fill");
+        }
+        return;
+    }
+
     currentPlayer.wall_decrement();
     changePlayer();
 
@@ -354,8 +454,9 @@ function initApplication() {
     var crossovers = $(".crossover");
     var allWalls = $(".wall");
 
-    var objectsCells = [];
+
     var objectsCrossovers = [];
+
     window.objectsCrossovers = objectsCrossovers;
 
     var objectsVerticalWalls = [];
