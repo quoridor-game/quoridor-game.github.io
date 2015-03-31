@@ -10,10 +10,8 @@
     <script type="text/javascript">
         $(function () {
             document.oncontextmenu = function (event) {
-//                return false;
+                return false;
             };
-
-            initApplication();
 
             var $mainWrapper = $(".main-wrapper");
             var $gameField = $(".game-field");
@@ -44,6 +42,7 @@
 
             $("#menu span").click(function(){
                 $("#menu").hide();
+                initApplication();
             });
 
         });
